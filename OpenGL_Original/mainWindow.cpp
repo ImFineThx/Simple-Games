@@ -68,7 +68,8 @@ int main()
 	// configure global opengl state
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
-
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 	// build and compile shaders
 	// -------------------------
 	Shader* shader = new Shader("blending.vert", "blending.frag");
@@ -371,24 +372,26 @@ int main()
 	// -------------
 	unsigned int cubeTexture = loadTexture("cube.jpg");
 	unsigned int floorTexture = loadTexture("ground.jpg");
-	unsigned int transparentTexture = loadTexture("grass.png");
-
+	unsigned int transparentTexture = loadTexture("window.png");
+	
 	// transparent vegetation locations
 	// --------------------------------
-	vector<glm::vec3> vegetation
-	{
-		glm::vec3(-1.5f, 0.0f, -0.48f),
-		glm::vec3(1.5f, 0.0f, 0.51f),
-		glm::vec3(0.0f, 0.0f, 0.7f),
-		glm::vec3(-0.3f, 0.0f, -2.3f),
-		glm::vec3(0.5f, 0.0f, -0.6f)
-	};
 
+
+	   vector<glm::vec3> windows
+    {
+        glm::vec3(-1.5f, 0.0f, -0.48f),
+        glm::vec3( 1.5f, 0.0f, 0.51f),
+        glm::vec3( 0.0f, 0.0f, 0.7f),
+        glm::vec3(-0.3f, 0.0f, -2.3f),
+        glm::vec3( 0.5f, 0.0f, -0.6f)
+    };
+	
 	// shader configuration
 	// --------------------
 	shader->use();
 	shader->setInt("texture1", 0);
-
+	
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -408,6 +411,14 @@ int main()
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // don't forget to clear the stencil buffer!
 
+
+		map<float,glm::vec3> sorted;
+		for (unsigned int i = 0;i<windows.size();++i)
+		{
+			float distance = glm::length(camera.Position - windows[i]);
+			sorted[distance] = windows[i];
+		}
+		
 		// set uniforms
 		shader->use();
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),
@@ -438,12 +449,12 @@ int main()
 		// vegetation
 		glBindVertexArray(transparentVAO);
 		glBindTexture(GL_TEXTURE_2D, transparentTexture);
-		for (GLuint i = 0; i < vegetation.size(); i++)
+		for (map<float,glm::vec3>::reverse_iterator it = sorted.rbegin();it != sorted.rend();++it)
 		{
 			model = glm::mat4(1.0f);
-			model = glm::translate(model, vegetation[i]);
-			shader->setMat4("model", model);
-			glDrawArrays(GL_TRIANGLES, 0, 6);
+			model = glm::translate(model,it->second);
+			shader->setMat4("model",model);
+			glDrawArrays(GL_TRIANGLES,0,6);
 		}
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
