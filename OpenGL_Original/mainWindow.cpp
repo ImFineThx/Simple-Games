@@ -74,6 +74,9 @@ int main()
 	Shader* shader = new Shader("cubemaps.vert", "cubemaps.frag");
 	Shader* screenShader = new Shader("framebuffers_screen.vert", "framebuffers_screen.frag");
 	Shader* skyboxShader = new Shader("skybox.vert", "skybox.frag");
+	Shader* normalShader = new Shader("normal_visualization.vert","normal_visualization.frag","normal_visualization.geom");
+
+	
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
 	float skyboxVertices[] = {
@@ -335,12 +338,20 @@ int main()
 		                                        100.0f);		
 		shader->setMat4("view", view);
 		shader->setMat4("projection", projection);
-		shader->setVec3("cameraPos",camera.Position);
+		shader->setVec3("cameraPos",camera.Position);		
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model,glm::vec3(0.0f,-1.75f,0.0f));
-		model = glm::scale(model,glm::vec3(0.2f,0.2f,0.2f));
+		//model = glm::translate(model,glm::vec3(0.0f,-1.75f,0.0f));
+		//model = glm::scale(model,glm::vec3(0.2f,0.2f,0.2f));
 		shader->setMat4("model", model);
 		NamiModel.Draw(shader);
+
+		normalShader->use();
+        normalShader->setMat4("projection", projection);
+        normalShader->setMat4("view", view);
+        normalShader->setMat4("model", model);
+
+        NamiModel.Draw(normalShader);
+		
 
 		glDepthFunc(GL_LEQUAL);
 		skyboxShader->use();
@@ -383,6 +394,7 @@ int main()
 	delete shader;
 	delete screenShader;
 	delete skyboxShader;
+	delete normalShader;
 	glfwTerminate();
 	return 0;
 }
