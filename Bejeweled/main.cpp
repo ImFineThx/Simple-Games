@@ -1,8 +1,9 @@
+//消消乐
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
 
-int      t_size = 54; //ש���С
+int      t_size = 54; //×©¿é´óÐ¡
 Vector2i offset(48, 24);
 
 struct piece
