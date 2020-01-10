@@ -1,3 +1,4 @@
+//俄罗斯方块
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -12,7 +13,7 @@ struct Point
 	int x,    y;
 }       a[4], b[4];
 
-//��״
+//ÐÎ×´
 int figures[7][4] =
 {
 	1,
