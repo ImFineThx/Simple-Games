@@ -1,3 +1,4 @@
+//æ˜¯ç”·äººå°±ä¸Šä¸€ç™¾å±‚
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -21,13 +22,13 @@ int main()
 
 	sBackground.setScale(2, 2);
 
-	for (int i = 0; i < 10; ++i) //Ëæ»úÆ½Ì¨Î»ÖÃ
+	for (int i = 0; i < 10; ++i) //éšæœºå¹³å°ä½ç½®
 	{
 		plat[i].x = rand() % 800;
 		plat[i].y = rand() % 1066;
 	}
 
-	int   x = 100, y = 100, h = 200; //ÈËÎïÊôÐÔ
+	int   x = 100, y = 100, h = 200; //äººç‰©å±žæ€§
 	float dx = 0,  dy = 0;
 
 	while (window.isOpen())
@@ -50,14 +51,14 @@ int main()
 			x -= 3;
 		}
 
-		dy += 0.2; //ÈËÎïÌøÔ¾
+		dy += 0.2; //äººç‰©è·³è·ƒ
 		y += dy;
 		if (y > 1000)
 		{
 			dy = -12;
 		}
 
-		if (y < h)  //Ñ­»·Æ½Ì¨
+		if (y < h)  //å¾ªçŽ¯å¹³å°
 		{
 			for (int i = 0; i < 10; ++i)
 			{
@@ -73,7 +74,7 @@ int main()
 			}
 		}
 
-		for (int i = 0; i < 10; ++i) //ÈËÎïºÍÆ½Ì¨µÄÏñËØ±ßÔµ¼ì²â
+		for (int i = 0; i < 10; ++i) //äººç‰©å’Œå¹³å°çš„åƒç´ è¾¹ç¼˜æ£€æµ‹
 		{
 			if ((x + 50 > plat[i].x) && (x + 20 < plat[i].x + 68) && (y + 70 > plat[i].y) && (y + 70 < plat[i].y + 14)
 				&& (dy > 0))
