@@ -1,3 +1,4 @@
+//æ‰“ç –å—
 #include <SFML/Graphics.hpp>
 #include <time.h>
 using namespace sf;
@@ -13,10 +14,10 @@ int main()
 
 	RenderWindow window(VideoMode(520, 450), "Arkanoid!");
 
-	window.setFramerateLimit(60); //ÏŞÖÆÖ¡Êı
+	window.setFramerateLimit(60); //é™åˆ¶å¸§æ•°
 	window.setSize(Vector2u(1040,800));
 	
-	//ÔØÈëÌùÍ¼
+	//è½½å…¥è´´å›¾
 	Texture t1, t2, t3, t4;
 	t1.loadFromFile("block01.png");
 	t2.loadFromFile("background.jpg");
@@ -56,7 +57,7 @@ int main()
 			}
 		}
 
-		sBall.move(dx, 0); //x,yÒª·Ö±ğÅĞ¶Ï²¢ÒÆ¶¯ ²»È»¾ÍÖ»»áĞ±×ÅÒÆ¶¯
+		sBall.move(dx, 0); //x,yè¦åˆ†åˆ«åˆ¤æ–­å¹¶ç§»åŠ¨ ä¸ç„¶å°±åªä¼šæ–œç€ç§»åŠ¨
 
 		for (int i = 0; i < n; ++i)
 		{
